@@ -1,0 +1,1929 @@
+<!DOCTYPE html>
+<html lang="es" data-theme="light" style=""><head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SyncLab OS — Revista Técnica · Sistemas Operativos</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin="">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&amp;family=JetBrains+Mono:wght@400;700&amp;family=Playfair+Display:ital,wght@0,400;0,700;1,400&amp;display=swap" rel="stylesheet">
+    <style>
+      :root {
+        --blue-deep: #0d1f3c;
+        --blue-mid: #1b3a6b;
+        --blue-light: #2e5fa3;
+        --green-tech: #00a878;
+        --green-dark: #007a57;
+        --red-accent: #e63946;
+        --gold-accent: #d4a853;
+        --bg-page: #f5f2ee;
+        --bg-white: #ffffff;
+        --bg-section: #fafafa;
+        --text-dark: #1a1a2e;
+        --text-body: #2d3748;
+        --text-muted: #718096;
+        --border: #e2e8f0;
+        --code-bg: #1a1e2e;
+        --shadow-sm: 0 1px 3px rgba(0, 0, 0, 0.08);
+        --shadow-md: 0 4px 12px rgba(0, 0, 0, 0.1);
+        --shadow-lg: 0 8px 24px rgba(0, 0, 0, 0.12);
+      }
+
+      * {
+        box-sizing: border-box;
+      }
+
+      body {
+        font-family: 'Inter', sans-serif;
+        max-width: 100%;
+        margin: 0;
+        padding: 0;
+        background-color: var(--bg-page);
+        color: var(--text-body);
+        line-height: 1.7;
+      }
+
+      /* Headings */
+      h1 {
+        font-family: 'Playfair Display', serif;
+        font-size: 4rem;
+        color: white;
+        line-height: 1.1;
+        margin: 0;
+      }
+
+      h2 {
+        font-family: 'Playfair Display', serif;
+        font-size: 2.2rem;
+        color: var(--blue-deep);
+        border-bottom: 3px solid var(--gold-accent);
+        padding-bottom: 12px;
+        margin-top: 3.5rem;
+        margin-bottom: 1.5rem;
+      }
+
+      h3 {
+        font-family: 'Inter', sans-serif;
+        font-size: 1.4rem;
+        font-weight: 700;
+        color: var(--blue-mid);
+        margin-top: 2rem;
+        margin-bottom: 1rem;
+      }
+
+      h4 {
+        font-family: 'Inter', sans-serif;
+        font-size: 1.1rem;
+        font-weight: 700;
+        color: var(--blue-light);
+        margin-top: 1.5rem;
+        text-transform: uppercase;
+        letter-spacing: 0.05em;
+        margin-bottom: 0.8rem;
+      }
+
+      /* Layout Containers */
+      .content-wrapper {
+        max-width: 900px;
+        margin: 0 auto;
+        padding: 0 20px;
+      }
+
+      section {
+        padding: 3rem 0;
+        background-color: var(--bg-white);
+        margin-bottom: 2px;
+      }
+
+      section.dark-section {
+        background-color: var(--blue-deep);
+        color: white;
+      }
+
+      /* Cover Page */
+      .cover {
+        min-height: 1000px; /* Instead of 100vh */
+        background: linear-gradient(135deg, var(--blue-deep) 0%, #0a3060 50%, #0d1f3c 100%);
+        display: flex;
+        flex-direction: column;
+        justify-content: space-between;
+        padding: 4rem;
+        position: relative;
+        overflow: hidden;
+        color: white;
+      }
+
+      .cover-bg-art {
+        position: absolute;
+        top: 0;
+        right: 0;
+        width: 60%;
+        height: 100%;
+        opacity: 0.07;
+        pointer-events: none;
+      }
+
+      .cover-logo-bar {
+        display: flex;
+        align-items: center;
+        gap: 1rem;
+        margin-bottom: auto;
+      }
+
+      .cover-logo-text {
+        font-family: 'JetBrains Mono', monospace;
+        font-size: 0.9rem;
+        color: rgba(255, 255, 255, 0.6);
+        letter-spacing: 0.15em;
+      }
+
+      .cover-main {
+        flex: 1;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        padding: 4rem 0;
+      }
+
+      .cover-eyebrow {
+        font-family: 'JetBrains Mono', monospace;
+        font-size: 0.85rem;
+        color: var(--green-tech);
+        letter-spacing: 0.2em;
+        text-transform: uppercase;
+        margin-bottom: 1rem;
+      }
+
+      .cover-title {
+        font-family: 'Playfair Display', serif;
+        font-size: 5.5rem;
+        font-weight: 700;
+        color: white;
+        line-height: 1.05;
+        margin: 0 0 0.5rem 0;
+      }
+
+      .cover-subtitle {
+q        font-family: 'Inter', sans-serif;
+        font-size: 1.6rem;
+        color: rgba(255, 255, 255, 0.85);
+        font-style: italic;
+        margin: 0 0 2rem 0;
+        font-weight: 300;
+      }
+
+      .cover-tagline {
+        font-size: 1.05rem;
+        color: rgba(255, 255, 255, 0.7);
+        max-width: 560px;
+        padding-left: 1.5rem;
+        border-left: 3px solid var(--gold-accent);
+        line-height: 1.6;
+        margin-bottom: 3rem;
+      }
+
+      .cover-tags {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 10px;
+      }
+
+      .tag {
+        padding: 6px 14px;
+        border: 1px solid rgba(255, 255, 255, 0.3);
+        color: rgba(255, 255, 255, 0.9);
+        font-size: 0.8rem;
+        font-weight: 600;
+        letter-spacing: 0.1em;
+        text-transform: uppercase;
+      }
+
+      .cover-footer {
+        border-top: 1px solid rgba(255, 255, 255, 0.15);
+        padding-top: 1.5rem;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        font-size: 0.85rem;
+        color: rgba(255, 255, 255, 0.5);
+      }
+
+      /* Credits Page */
+      .credits-header {
+        border-bottom: 1px solid rgba(255, 255, 255, 0.15);
+        padding-bottom: 1.5rem;
+        margin-bottom: 2.5rem;
+        font-family: 'Playfair Display', serif;
+        font-size: 2.5rem;
+        color: white;
+      }
+
+      .credits-grid {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 2.5rem;
+      }
+
+      .cred-block {
+        margin-bottom: 0;
+      }
+
+      .cred-label {
+        font-size: 0.75rem;
+        font-weight: 700;
+        letter-spacing: 0.15em;
+        text-transform: uppercase;
+        color: var(--green-tech);
+        margin-bottom: 0.4rem;
+        display: block;
+      }
+
+      .cred-value {
+        font-size: 1.1rem;
+        color: white;
+        border-bottom: 1px solid rgba(255, 255, 255, 0.2);
+        padding-bottom: 0.5rem;
+        min-height: 2rem;
+        display: block;
+      }
+
+      .cred-placeholder {
+        border-bottom: 1px dashed rgba(255, 255, 255, 0.3);
+        min-height: 2rem;
+        display: block;
+      }
+
+      /* TOC */
+      .toc-list {
+        list-style: none;
+        padding: 0;
+        margin: 0;
+      }
+
+      .toc-item {
+        display: flex;
+        align-items: baseline;
+        padding: 12px 0;
+        border-bottom: 1px solid rgba(255, 255, 255, 0.07);
+        text-decoration: none;
+        color: rgba(255, 255, 255, 0.8);
+      }
+
+      .toc-num {
+        font-family: 'JetBrains Mono', monospace;
+        font-size: 0.75rem;
+        color: var(--gold-accent);
+        min-width: 3rem;
+        font-weight: 700;
+      }
+
+      .toc-name {
+        flex: 1;
+        font-size: 1rem;
+      }
+
+      .toc-dots {
+        flex: 1;
+        border-bottom: 1px dotted rgba(255, 255, 255, 0.2);
+        margin: 0 12px;
+        height: 1px;
+        align-self: center;
+      }
+
+      /* Callout Boxes */
+      .box-concept,
+      .box-decision,
+      .box-risk,
+      .box-evidence,
+      .box-note {
+        position: relative;
+        padding: 1.5rem;
+        margin: 1.5rem 0;
+      }
+
+      .box-concept {
+        background: #ebf8f4;
+        border-left: 5px solid var(--green-tech);
+      }
+      .box-concept::before {
+        content: 'CONCEPTO CLAVE';
+        position: absolute;
+        top: -1px;
+        left: -5px;
+        background: var(--green-tech);
+        color: white;
+        padding: 3px 10px;
+        font-size: 0.65rem;
+        font-weight: 800;
+        letter-spacing: 0.1em;
+      }
+
+      .box-decision {
+        background: #ebf0f8;
+        border-left: 5px solid var(--blue-mid);
+      }
+      .box-decision::before {
+        content: 'DECISIÓN DE DISEÑO';
+        position: absolute;
+        top: -1px;
+        left: -5px;
+        background: var(--blue-mid);
+        color: white;
+        padding: 3px 10px;
+        font-size: 0.65rem;
+        font-weight: 800;
+        letter-spacing: 0.1em;
+      }
+
+      .box-risk {
+        background: #fef2f2;
+        border-left: 5px solid var(--red-accent);
+      }
+      .box-risk::before {
+        content: 'RIESGO Y MITIGACIÓN';
+        position: absolute;
+        top: -1px;
+        left: -5px;
+        background: var(--red-accent);
+        color: white;
+        padding: 3px 10px;
+        font-size: 0.65rem;
+        font-weight: 800;
+        letter-spacing: 0.1em;
+      }
+
+      .box-evidence {
+        background: #fffbeb;
+        border-left: 5px solid var(--gold-accent);
+      }
+      .box-evidence::before {
+        content: 'EVIDENCIA DE CUMPLIMIENTO';
+        position: absolute;
+        top: -1px;
+        left: -5px;
+        background: var(--gold-accent);
+        color: white;
+        padding: 3px 10px;
+        font-size: 0.65rem;
+        font-weight: 800;
+        letter-spacing: 0.1em;
+      }
+
+      .box-note {
+        background: #f7f7f7;
+        border-left: 4px solid #cbd5e0;
+      }
+      .box-note::before {
+        content: 'NOTA TÉCNICA';
+        position: absolute;
+        top: -1px;
+        left: -5px;
+        background: #cbd5e0;
+        color: #4a5568;
+        padding: 3px 10px;
+        font-size: 0.65rem;
+        font-weight: 800;
+        letter-spacing: 0.1em;
+      }
+
+      /* Code Blocks */
+      .code-block {
+        background: var(--code-bg);
+        color: #d4d4d4;
+        padding: 1.5rem 1.75rem;
+        font-family: 'JetBrains Mono', monospace;
+        font-size: 0.8rem;
+        line-height: 1.7;
+        overflow-x: auto;
+        margin: 1.5rem 0;
+        border-radius: 4px;
+        border-left: 4px solid var(--gold-accent);
+        white-space: pre;
+      }
+      .code-title {
+        background: rgba(255, 255, 255, 0.05);
+        padding: 0.5rem 1.75rem;
+        font-size: 0.7rem;
+        font-weight: 700;
+        letter-spacing: 0.1em;
+        color: rgba(255, 255, 255, 0.5);
+        text-transform: uppercase;
+        margin-top: 1.5rem;
+        border-top-left-radius: 4px;
+        border-top-right-radius: 4px;
+        font-family: 'JetBrains Mono', monospace;
+      }
+      .kw {
+        color: #569cd6;
+      }
+      .tp {
+        color: #4ec9b0;
+      }
+      .st {
+        color: #ce9178;
+      }
+      .cm {
+        color: #6a9955;
+      }
+      .fn {
+        color: #dcdcaa;
+      }
+      .nm {
+        color: #b5cea8;
+      }
+
+      /* Tables */
+      table {
+        width: 100%;
+        border-collapse: collapse;
+        margin: 1.5rem 0;
+        font-size: 0.9rem;
+      }
+      thead tr {
+        background: var(--blue-deep);
+        color: white;
+      }
+      th {
+        padding: 12px 16px;
+        text-align: left;
+        font-weight: 600;
+        letter-spacing: 0.03em;
+      }
+      td {
+        padding: 11px 16px;
+        border-bottom: 1px solid var(--border);
+      }
+      tr:nth-child(even) {
+        background: #f8fafc;
+      }
+
+      /* Figures */
+      .fig {
+        background: white;
+        border: 1px solid var(--border);
+        margin: 2rem 0;
+        box-shadow: var(--shadow-sm);
+      }
+      .fig img {
+        width: 100%;
+        display: block;
+        border-bottom: 1px solid var(--border);
+      }
+      .fig-caption {
+        padding: 12px 16px;
+        font-size: 0.83rem;
+        color: var(--text-muted);
+        line-height: 1.5;
+      }
+      .fig-num {
+        font-weight: 800;
+        color: var(--blue-deep);
+        margin-right: 5px;
+      }
+
+      /* Grids */
+      .grid-2 {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 2rem;
+        margin: 1.5rem 0;
+      }
+      .grid-3 {
+        display: grid;
+        grid-template-columns: 1fr 1fr 1fr;
+        gap: 1.5rem;
+        margin: 1.5rem 0;
+      }
+
+      /* Cards */
+      .card {
+        background: white;
+        border: 1px solid var(--border);
+        padding: 1.5rem;
+        box-shadow: var(--shadow-sm);
+      }
+      .card-icon {
+        font-size: 2rem;
+        margin-bottom: 0.75rem;
+        display: block;
+      }
+      .card-title {
+        font-weight: 700;
+        color: var(--blue-deep);
+        margin-bottom: 0.5rem;
+        display: block;
+      }
+
+      /* State Dots */
+      .state-dot {
+        display: inline-block;
+        width: 10px;
+        height: 10px;
+        border-radius: 50%;
+        margin-right: 6px;
+      }
+      .state-thinking {
+        background: #4a90e2;
+      }
+      .state-waiting {
+        background: #f5a623;
+      }
+      .state-eating {
+        background: #2ecc71;
+      }
+
+      /* Timeline */
+      .timeline {
+        position: relative;
+        padding-left: 2rem;
+        border-left: 2px solid var(--gold-accent);
+        margin: 1.5rem 0;
+      }
+      .timeline-item {
+        margin-bottom: 1.5rem;
+        position: relative;
+      }
+      .timeline-item::before {
+        content: '';
+        position: absolute;
+        left: calc(-2rem - 5px);
+        top: 5px;
+        width: 10px;
+        height: 10px;
+        background: var(--gold-accent);
+        border-radius: 50%;
+        border: 2px solid white;
+      }
+      .timeline-label {
+        font-weight: 700;
+        color: var(--blue-deep);
+        margin-bottom: 0.25rem;
+        display: block;
+      }
+      .timeline-desc {
+        font-size: 0.9rem;
+        color: var(--text-muted);
+      }
+
+      /* Glossary */
+      .glossary-grid {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 1.5rem;
+      }
+      .glossary-item {
+        padding: 1.25rem;
+        border: 1px solid var(--border);
+        background: var(--bg-section);
+      }
+      .gloss-term {
+        font-family: 'Playfair Display', serif;
+        font-size: 1.05rem;
+        color: var(--blue-deep);
+        font-weight: 700;
+        margin-bottom: 0.5rem;
+        display: block;
+      }
+      .gloss-def {
+        font-size: 0.88rem;
+        color: var(--text-body);
+        line-height: 1.6;
+      }
+
+      /* Maintenance Items */
+      .maintenance-item {
+        display: flex;
+        gap: 1rem;
+        padding: 1rem 0;
+        border-bottom: 1px solid var(--border);
+      }
+      .maint-icon {
+        font-size: 1.3rem;
+        flex-shrink: 0;
+        margin-top: 0.2rem;
+      }
+      .maint-text {
+        flex: 1;
+      }
+      .maint-title {
+        font-weight: 700;
+        color: var(--blue-deep);
+        margin-bottom: 0.25rem;
+        display: block;
+      }
+      .maint-desc {
+        font-size: 0.88rem;
+        color: var(--text-muted);
+      }
+
+      /* Footer */
+      footer {
+        background: var(--blue-deep);
+        color: rgba(255, 255, 255, 0.5);
+        text-align: center;
+        padding: 2rem;
+        font-size: 0.8rem;
+      }
+
+      .section-divider {
+        text-align: center;
+        padding: 2rem;
+        color: var(--text-muted);
+        font-size: 0.8rem;
+        letter-spacing: 0.2em;
+        text-transform: uppercase;
+      }
+      .section-divider::before,
+      .section-divider::after {
+        content: '— ';
+      }
+
+      /* Helper */
+      .text-center {
+        text-align: center;
+      }
+
+      /* SVG Art */
+      .svg-container {
+        width: 100%;
+        height: 100%;
+      }
+    </style>
+  </head>
+  <body style="">
+    <!-- PORTADA -->
+    <div class="cover">
+      <div class="cover-bg-art">
+        <svg class="svg-container" viewBox="0 0 800 600">
+          <circle cx="400" cy="300" r="200" fill="none" stroke="white" stroke-width="1.5" stroke-opacity="0.3"></circle>
+          <circle cx="400" cy="100" r="30" fill="none" stroke="white" stroke-width="2" stroke-opacity="0.5"></circle>
+          <circle cx="590" cy="240" r="30" fill="none" stroke="white" stroke-width="2" stroke-opacity="0.5"></circle>
+          <circle cx="520" cy="460" r="30" fill="none" stroke="white" stroke-width="2" stroke-opacity="0.5"></circle>
+          <circle cx="280" cy="460" r="30" fill="none" stroke="white" stroke-width="2" stroke-opacity="0.5"></circle>
+          <circle cx="210" cy="240" r="30" fill="none" stroke="white" stroke-width="2" stroke-opacity="0.5"></circle>
+          <line x1="400" y1="300" x2="400" y2="130" stroke="white" stroke-width="1" stroke-opacity="0.2"></line>
+          <line x1="400" y1="300" x2="590" y2="240" stroke="white" stroke-width="1" stroke-opacity="0.2"></line>
+          <line x1="400" y1="300" x2="520" y2="460" stroke="white" stroke-width="1" stroke-opacity="0.2"></line>
+          <line x1="400" y1="300" x2="280" y2="460" stroke="white" stroke-width="1" stroke-opacity="0.2"></line>
+          <line x1="400" y1="300" x2="210" y2="240" stroke="white" stroke-width="1" stroke-opacity="0.2"></line>
+
+          <rect x="650" y="50" width="100" height="500" fill="none" stroke="white" stroke-width="1" stroke-opacity="0.2"></rect>
+          <line x1="650" y1="150" x2="750" y2="150" stroke="white" stroke-width="1" stroke-opacity="0.2"></line>
+          <line x1="650" y1="250" x2="750" y2="250" stroke="white" stroke-width="1" stroke-opacity="0.2"></line>
+          <line x1="650" y1="350" x2="750" y2="350" stroke="white" stroke-width="1" stroke-opacity="0.2"></line>
+          <line x1="650" y1="450" x2="750" y2="450" stroke="white" stroke-width="1" stroke-opacity="0.2"></line>
+        </svg>
+      </div>
+
+      <div class="cover-logo-bar">
+        <div class="cover-logo-text">SyncLab OS / DOCUMENTACIÓN TÉCNICA</div>
+      </div>
+
+      <div class="cover-main">
+        <div class="cover-eyebrow">SISTEMAS OPERATIVOS · PROYECTO No. 1</div>
+        <h1 class="cover-title">SyncLab OS</h1>
+        <div class="cover-subtitle">“Visualizando la concurrencia, entendiendo la sincronización.”</div>
+
+        <div class="cover-tagline">
+          Documentación técnica y manual de usuario para la implementación visual de dos problemas clásicos de
+          sincronización.
+        </div>
+
+        <div class="cover-tags">
+          <span class="tag">Java 21</span>
+          <span class="tag">Swing</span>
+          <span class="tag">Maven</span>
+          <span class="tag">Concurrencia</span>
+          <span class="tag">Sincronización</span>
+          <span class="tag">Visualización</span>
+        </div>
+      </div>
+
+      <div class="cover-footer">
+        <span>FACULTAD DE INGENIERÍA DE SISTEMAS</span>
+        <span>2025</span>
+        <span>EDICIÓN ACADÉMICA</span>
+      </div>
+    </div>
+
+    <!-- FICHA TÉCNICA -->
+    <section class="dark-section" style="padding: 4rem 0">
+      <div class="content-wrapper">
+        <h2 class="credits-header" style="color: white; border-color: rgba(255, 255, 255, 0.2)">
+          Ficha Técnica del Proyecto
+        </h2>
+        <div class="credits-grid">
+          <div class="cred-block">
+            <span class="cred-label">Curso</span>
+            <span class="cred-value">Sistemas Operativos</span>
+          </div>
+          <div class="cred-block">
+            <span class="cred-label">Tipo de Entrega</span>
+            <span class="cred-value">Proyecto No. 1 — Documentación Técnica Completa</span>
+          </div>
+          <div class="cred-block">
+            <span class="cred-label">Nombre del Proyecto</span>
+            <span class="cred-value">SyncLab OS</span>
+          </div>
+          <div class="cred-block">
+            <span class="cred-label">Versión</span>
+            <span class="cred-value">1.0</span>
+          </div>
+          <div class="cred-block">
+            <span class="cred-label">Lenguaje</span>
+            <span class="cred-value">Java 21 (OpenJDK)</span>
+          </div>
+          <div class="cred-block">
+            <span class="cred-label">Entorno</span>
+            <span class="cred-value">Aplicación de Escritorio (Swing)</span>
+          </div>
+          <div class="cred-block">
+            <span class="cred-label">Herramienta de Construcción</span>
+            <span class="cred-value">Apache Maven 3.9+</span>
+          </div>
+          <div class="cred-block">
+            <span class="cred-label">Enfoque</span>
+            <span class="cred-value">Concurrencia, Sincronización, Visualización, Sección Crítica</span>
+          </div>
+
+          <div class="cred-block">
+            <span class="cred-label">Integrantes del Equipo</span>
+            <span class="cred-placeholder">Eddy Marroquin 1146822, Paula Navarro 1006323, Walter Melendez 1174722</span>
+          </div>
+          <div class="cred-block">
+            <span class="cred-label">Universidad / Facultad</span>
+            <span class="cred-placeholder">Rafael Landívar, Ingeniería</span>
+          </div>
+          <div class="cred-block">
+            <span class="cred-label">Docente</span>
+            <span class="cred-placeholder">Marcelo Santucci</span>
+          </div>
+          <div class="cred-block">
+            <span class="cred-label">Fecha de Entrega</span>
+            <span class="cred-placeholder">24/03/2026</span>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- RESUMEN EJECUTIVO -->
+    <section>
+      <div class="content-wrapper">
+        <div class="box-concept" style="background: white; border-color: var(--green-tech)">
+          <h3 style="margin-top: 0">Resumen Ejecutivo</h3>
+          <p>
+            SyncLab OS es una solución de software educativo diseñada para abordar la complejidad abstracta de la
+            programación concurrente. El proyecto unifica en una sola aplicación de escritorio dos de los algoritmos más
+            representativos en la teoría de Sistemas Operativos: el problema del Productor-Consumidor y el problema de
+            los Filósofos Comensales.
+          </p>
+          <p>
+            La principal innovación de este desarrollo radica en su enfoque visual. Mientras que las implementaciones
+            tradicionales se limitan a salidas de consola (logs), SyncLab OS ofrece una interfaz gráfica reactiva que
+            permite observar en tiempo real el comportamiento de hilos, el bloqueo de recursos, la ocupación de buffers
+            y los estados de espera.
+          </p>
+          <p>
+            La unificación de ambos problemas en un mismo stack tecnológico permite una evaluación consistente de los
+            mecanismos de sincronización. Además, el valor para la defensa académica es significativo: la visualización
+            de estados en tiempo real permite demostrar la correctitud de la solución (ausencia de deadlock, exclusión
+            mutua) de manera empírica e inmediata, sin depender exclusivamente del análisis estático del código.
+          </p>
+        </div>
+      </div>
+    </section>
+
+    <!-- TABLA DE CONTENIDOS -->
+    <section class="dark-section" style="padding: 4rem 0">
+      <div class="content-wrapper">
+        <h2 style="color: white; border-color: rgba(255, 255, 255, 0.2)">Tabla de Contenidos</h2>
+        <ul class="toc-list">
+          <li class="toc-item">
+            <span class="toc-num">01.</span>
+            <span class="toc-name">Introducción y Objetivos</span>
+            <span class="toc-dots"></span>
+          </li>
+          <li class="toc-item">
+            <span class="toc-num">02.</span>
+            <span class="toc-name">Visión General del Sistema</span>
+            <span class="toc-dots"></span>
+          </li>
+          <li class="toc-item">
+            <span class="toc-num">03.</span>
+            <span class="toc-name">Arquitectura del Proyecto</span>
+            <span class="toc-dots"></span>
+          </li>
+          <li class="toc-item">
+            <span class="toc-num">04.</span>
+            <span class="toc-name">Módulo 1: Productor-Consumidor — Descripción y Flujo</span>
+            <span class="toc-dots"></span>
+          </li>
+          <li class="toc-item">
+            <span class="toc-num">05.</span>
+            <span class="toc-name">Módulo 1: Sección Crítica y Código</span>
+            <span class="toc-dots"></span>
+          </li>
+          <li class="toc-item">
+            <span class="toc-num">06.</span>
+            <span class="toc-name">Módulo 2: Filósofos Comensales — Descripción y Flujo</span>
+            <span class="toc-dots"></span>
+          </li>
+          <li class="toc-item">
+            <span class="toc-num">07.</span>
+            <span class="toc-name">Módulo 2: Sección Crítica y Código</span>
+            <span class="toc-dots"></span>
+          </li>
+          <li class="toc-item">
+            <span class="toc-num">08.</span>
+            <span class="toc-name">Sincronización: Primitivas y Control de Acceso</span>
+            <span class="toc-dots"></span>
+          </li>
+          <li class="toc-item">
+            <span class="toc-num">09.</span>
+            <span class="toc-name">Análisis de Riesgos: Race Conditions, Deadlock y Starvation</span>
+            <span class="toc-dots"></span>
+          </li>
+          <li class="toc-item">
+            <span class="toc-num">10.</span>
+            <span class="toc-name">Animación e Interfaz Gráfica</span>
+            <span class="toc-dots"></span>
+          </li>
+          <li class="toc-item">
+            <span class="toc-num">11.</span>
+            <span class="toc-name">Pruebas y Validación</span>
+            <span class="toc-dots"></span>
+          </li>
+          <li class="toc-item">
+            <span class="toc-num">12.</span>
+            <span class="toc-name">Manual de Usuario</span>
+            <span class="toc-dots"></span>
+          </li>
+          <li class="toc-item">
+            <span class="toc-num">13.</span>
+            <span class="toc-name">Limitaciones y Mejoras Futuras</span>
+            <span class="toc-dots"></span>
+          </li>
+          <li class="toc-item">
+            <span class="toc-num">14.</span>
+            <span class="toc-name">Conclusiones</span>
+            <span class="toc-dots"></span>
+          </li>
+          <li class="toc-item">
+            <span class="toc-num">15.</span>
+            <span class="toc-name">Glosario Técnico</span>
+            <span class="toc-dots"></span>
+          </li>
+          <li class="toc-item">
+            <span class="toc-num">16.</span>
+            <span class="toc-name">Recomendaciones de Mantenimiento</span>
+            <span class="toc-dots"></span>
+          </li>
+          <li class="toc-item">
+            <span class="toc-num">17.</span>
+            <span class="toc-name">Guía para la Defensa Oral</span>
+            <span class="toc-dots"></span>
+          </li>
+        </ul>
+      </div>
+    </section>
+
+    <!-- 01. INTRODUCCIÓN -->
+    <section id="intro">
+      <div class="content-wrapper">
+        <h2>01. Introducción y Objetivos</h2>
+
+        <h3>Contexto y Motivación</h3>
+        <p>
+          La gestión eficiente de recursos compartidos es uno de los problemas fundacionales de los sistemas operativos.
+          Desde los primeros sistemas de tiempo compartido, los diseñadores de SO han enfrentado el reto de coordinar
+          múltiples procesos que compiten por un conjunto limitado de recursos: memoria, ciclos de CPU, dispositivos de
+          E/S y acceso a datos críticos. La incapacidad de resolver estos conflictos correctamente puede derivar en
+          condiciones de carrera, interbloqueos y comportamientos no deterministas que comprometen la integridad del
+          sistema.
+        </p>
+
+        <p>
+          El Productor-Consumidor y los Filósofos Comensales son los modelos más citados en la literatura de sistemas
+          operativos porque capturan, de forma mínima y elegante, los dos grandes desafíos de la concurrencia: la
+          coordinación de flujo de datos entre agentes asimétricos (producción vs. consumo) y la negociación de
+          múltiples recursos entre agentes simétricos (tenedores entre filósofos). Dominar su implementación correcta es
+          equivalente a comprender el corazón de cualquier sistema de sincronización.
+        </p>
+
+        <div class="box-concept">
+          <p>
+            <strong>Objetivo General:</strong> Desarrollar una aplicación gráfica en Java 21 que simule, visualice y
+            valide la correcta sincronización de hilos en dos escenarios clásicos de sistemas operativos, garantizando
+            exclusión mutua, ausencia de deadlock y progreso justo para todos los hilos participantes.
+          </p>
+        </div>
+
+        <h3>Objetivos Específicos</h3>
+        <ul>
+          <li>
+            Implementar el problema Productor-Consumidor con buffer finito, un productor y tres consumidores
+            especializados (primos, pares, impares).
+          </li>
+          <li>
+            Implementar el problema de los Filósofos Comensales con cinco hilos filósofo y control explícito de
+            adquisición de recursos.
+          </li>
+          <li>Garantizar exclusión mutua mediante ReentrantLock y variables de condición.</li>
+          <li>Prevenir condiciones de deadlock mediante asignación atómica de recursos duales.</li>
+          <li>Proveer una interfaz gráfica que visualice en tiempo real los estados de hilos y recursos.</li>
+          <li>Ofrecer escenarios integrados de prueba seleccionables desde la interfaz.</li>
+        </ul>
+      </div>
+    </section>
+
+    <!-- 02. VISIÓN GENERAL -->
+    <section id="vision">
+      <div class="content-wrapper">
+        <h2>02. Visión General del Sistema</h2>
+
+        <p>
+          SyncLab OS es una aplicación de escritorio autocontenida, ejecutable con un único comando Maven, que no
+          requiere configuración previa ni bases de datos externas. Su filosofía de diseño puede resumirse en tres
+          principios: (1) Unificación — ambas simulaciones conviven bajo un único punto de entrada y comparten el mismo
+          entorno de ejecución; (2) Observabilidad — cada estado interno relevante es visible en la interfaz, desde el
+          nivel de ocupación del buffer hasta el número de comidas por filósofo; y (3) Controlabilidad — el usuario
+          puede pausar, reanudar y reiniciar cualquier simulación sin necesidad de reiniciar la aplicación.
+        </p>
+
+        <h3>Flujo de Navegación</h3>
+        <div class="timeline">
+          <div class="timeline-item">
+            <span class="timeline-label">Inicio de la JVM</span>
+            <span class="timeline-desc">Carga de MainFrame en el hilo EDT de Swing. Configuración del Look &amp; Feel.</span>
+          </div>
+          <div class="timeline-item">
+            <span class="timeline-label">Menú Principal</span>
+            <span class="timeline-desc">Presentación de las dos prácticas disponibles. Selección de módulo por parte del usuario.</span>
+          </div>
+          <div class="timeline-item">
+            <span class="timeline-label">Ejecución de Simulación</span>
+            <span class="timeline-desc">Instanciación del panel. Arranque de hilos de trabajo. El Timer de UI comienza a consultar
+              snapshots.</span>
+          </div>
+          <div class="timeline-item">
+            <span class="timeline-label">Pausa / Reanudación</span>
+            <span class="timeline-desc">Control de bandera AtomicBoolean. Los hilos se detienen en puntos seguros sin perder estado.</span>
+          </div>
+          <div class="timeline-item">
+            <span class="timeline-label">Retorno al Menú</span>
+            <span class="timeline-desc">Navegación inversa. Detención limpia de todos los hilos activos y liberación de recursos.</span>
+          </div>
+        </div>
+
+        <div class="fig">
+          <img src="1.png" alt="Menú Principal" data-height-listener-added="true">
+          <div class="fig-caption">
+            <span class="fig-num">Figura 1.</span> Menú principal de SyncLab OS. Las dos tarjetas actúan como puntos de
+            entrada independientes a cada práctica de concurrencia, con una estética limpia y moderna.
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- 03. ARQUITECTURA -->
+    <section id="arquitectura">
+      <div class="content-wrapper">
+        <h2>03. Arquitectura del Proyecto</h2>
+
+        <p>
+          El proyecto sigue una arquitectura modular estricta, separando la lógica de negocio (concurrencia) de la capa
+          de presentación (Swing). Se ha optado por un diseño basado en eventos y snapshots para desacoplar la velocidad
+          de ejecución de los hilos de la tasa de refresco de la pantalla.
+        </p>
+
+        <div class="code-title">Estructura de Paquetes</div>
+        <div class="code-block">
+          com.synclabos/ ├── app/ │ └── SyncLabOSApp.java // Punto de entrada único (main) ├── ui/ │ └── MainFrame.java
+          // Ventana principal + CardLayout ├── common/ │ └── EventSink.java // Interfaz de logging de eventos ├──
+          producerconsumer/ │ ├── NumberItem.java // Modelo de dato (valor + tipo) │ ├── NumberType.java // Enum: PRIME,
+          EVEN, ODD │ ├── ProducerConsumerState.java // Snapshot inmutable para UI │ ├── StateListener.java // Callback
+          hacia la UI │ ├── ProducerConsumerSimulation.java // Orquestador de hilos │ └── ProducerConsumerPanel.java //
+          Vista Swing del módulo └── diningphilosophers/ ├── PhilosopherState.java // Enum: THINKING, WAITING, EATING
+          ├── DiningState.java // Snapshot inmutable para UI ├── DiningTable.java // Monitor: tenedores + cola FIFO ├──
+          DiningPhilosophersSimulation.java // Orquestador de hilos └── DiningPhilosophersPanel.java // Vista Swing del
+          módulo
+        </div>
+
+        <table>
+          <thead>
+            <tr>
+              <th>Paquete</th>
+              <th>Responsabilidad Principal</th>
+              <th>Patrón Aplicado</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td><strong>app</strong></td>
+              <td>Arrancar la JVM en el EDT y configurar Look &amp; Feel</td>
+              <td>Entry Point</td>
+            </tr>
+            <tr>
+              <td><strong>ui</strong></td>
+              <td>Gestionar la navegación entre vistas con CardLayout</td>
+              <td>Coordinator</td>
+            </tr>
+            <tr>
+              <td><strong>common</strong></td>
+              <td>Definir contrato de logging de eventos</td>
+              <td>Interface/Contract</td>
+            </tr>
+            <tr>
+              <td><strong>producerconsumer</strong></td>
+              <td>Orquestar buffer acotado, productor y consumidores</td>
+              <td>Monitor + Observer</td>
+            </tr>
+            <tr>
+              <td><strong>diningphilosophers</strong></td>
+              <td>Modelar mesa, tenedores y filósofos</td>
+              <td>Monitor + FIFO Queue</td>
+            </tr>
+          </tbody>
+        </table>
+
+        <div class="box-decision">
+          <p>
+            <strong>Separación UI/Lógica mediante Snapshots:</strong> Para evitar que la lógica concurrente acceda
+            directamente a los componentes Swing (lo cual viola el modelo de hilo único de Swing), los hilos de
+            simulación no modifican la UI. En su lugar, actualizan objetos de estado (ProducerConsumerState,
+            DiningState). Un javax.swing.Timer en el hilo EDT lee estos snapshots periódicamente para repintar la
+            interfaz. Este patrón garantiza thread-safety en ambas capas.
+          </p>
+        </div>
+      </div>
+    </section>
+
+    <!-- 04. MÓDULO 1: PRODUCTOR-CONSUMIDOR -->
+    <section id="prod-cons">
+      <div class="content-wrapper">
+        <h2>04. Módulo 1: Productor-Consumidor</h2>
+
+        <h3>Descripción Formal del Problema</h3>
+        <p>
+          El problema del Productor-Consumidor (también conocido como el problema del buffer acotado) modela la
+          interacción entre dos tipos de agentes que comparten una estructura de datos de capacidad limitada. El
+          productor genera datos y los deposita en el buffer; los consumidores los extraen para procesarlos. El reto de
+          sincronización surge porque: (a) el productor no debe insertar si el buffer está lleno, y (b) cada consumidor
+          no debe intentar extraer un dato que no es de su tipo, ni hacerlo cuando el buffer está vacío para su
+          categoría.
+        </p>
+
+        <h3>Actores y Responsabilidades</h3>
+        <div class="grid-3">
+          <div class="card">
+            <span class="card-icon">🏭</span>
+            <span class="card-title">Productor</span>
+            <p>
+              Lee enteros desde la fuente de datos. Clasifica cada número como PRIMO, PAR o IMPAR. Inserta el item en el
+              buffer compartido. Estado: ACTIVO, BLOQUEADO, FINALIZADO.
+            </p>
+          </div>
+          <div class="card">
+            <span class="card-icon">⚙️</span>
+            <span class="card-title">Consumidores (3x)</span>
+            <p>
+              Especializados por tipo (EVEN, ODD, PRIME). Extraen solo items de su tipo. Acumulan sumas parciales.
+              Estado: EXTRAYENDO, BLOQUEADO POR TIPO, FINALIZADO.
+            </p>
+          </div>
+          <div class="card">
+            <span class="card-icon">📦</span>
+            <span class="card-title">Buffer Compartido</span>
+            <p>
+              Cola acotada (LinkedList) de capacidad configurable (N=5). Único recurso compartido. Protegido por Monitor
+              (Lock + Condition).
+            </p>
+          </div>
+        </div>
+
+        <div class="box-evidence">
+          <p>
+            <strong>Prioridad de Clasificación:</strong> El número 2 es PRIMO (y también PAR). El número 9 es IMPAR. La
+            política implementada es <strong>primo &gt; par &gt; impar</strong>, lo que garantiza que los primos siempre vayan
+            al consumidor correcto.
+          </p>
+        </div>
+
+        <div class="code-title">NumberItem.java — Clasificación con prioridad estricta</div>
+        <div class="code-block">
+          <span class="kw">public static</span> <span class="tp">NumberItem</span>
+          <span class="fn">fromValue</span>(<span class="tp">int</span> <span class="nm">value</span>) {
+          <span class="kw">if</span> (isPrime(value)) <span class="cm">// Prioridad máxima: primos primero</span>
+          <span class="kw">return new</span> <span class="tp">NumberItem</span>(value,
+          <span class="tp">NumberType</span>.PRIME); <span class="kw">if</span> (value % 2 == 0)
+          <span class="cm">// Segunda prioridad: pares</span> <span class="kw">return new</span>
+          <span class="tp">NumberItem</span>(value, <span class="tp">NumberType</span>.EVEN);
+          <span class="kw">return new</span> <span class="tp">NumberItem</span>(value,
+          <span class="tp">NumberType</span>.ODD); <span class="cm">// Residual: impares</span> }
+        </div>
+
+        <div class="fig">
+          <img src="2.png" alt="Simulación Productor-Consumidor" data-height-listener-added="true">
+          <div class="fig-caption">
+            <span class="fig-num">Figura 2.</span> Módulo Productor-Consumidor durante la Prueba 2 (Dominio de Pares).
+            El buffer muestra 2 elementos en cola. El consumidor C1-PARES está en estado EXTRAYENDO, mientras C2-IMPARES
+            y C3-PRIMOS permanecen bloqueados porque no hay items de su tipo en el buffer en ese instante.
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- 05. MÓDULO 1: SECCIÓN CRÍTICA -->
+    <section id="prod-cons-code">
+      <div class="content-wrapper">
+        <h2>05. Módulo 1: Sección Crítica y Código</h2>
+
+        <div class="box-concept">
+          <p>
+            <strong>La Sección Crítica:</strong> La clase SharedBuffer encapsula la LinkedList y los mecanismos de
+            sincronización. Es el único punto donde los hilos acceden al dato compartido. El principio de encapsulación
+            garantiza que ningún código externo pueda modificar la cola sin pasar por los métodos protegidos.
+          </p>
+        </div>
+
+        <div class="code-title">SharedBuffer.java — Método put() (Productor)</div>
+        <div class="code-block">
+          <span class="kw">lock</span>.lock(); <span class="kw">try</span> { <span class="kw">while</span> (queue.size()
+          &gt;= capacity &amp;&amp; running.get()) { onBlocked.run();
+          <span class="cm">// Notificar UI: productor bloqueado</span> changed.awaitNanos(200_000_000L);
+          <span class="cm">// Espera eficiente (200ms)</span>
+          }
+          <span class="kw">if</span> (!running.get()) <span class="kw">return</span>; queue.add(item);
+          changed.signalAll(); <span class="cm">// Despertar todos los consumidores</span> }
+          <span class="kw">finally</span> { <span class="kw">lock</span>.unlock();
+          <span class="cm">// SIEMPRE liberar el lock</span> }
+        </div>
+
+        <div class="code-title">SharedBuffer.java — Método takeOfType() (Consumidores)</div>
+        <div class="code-block">
+          <span class="kw">lock</span>.lock(); <span class="kw">try</span> {
+          <span class="kw">while</span> (running.get()) { <span class="tp">int</span> <span class="nm">idx</span> =
+          findFirst(type); <span class="cm">// Buscar primer item del tipo correcto</span>
+          <span class="kw">if</span> (idx &gt;= 0) { <span class="tp">NumberItem</span> <span class="nm">item</span> =
+          queue.remove(idx); changed.signalAll(); <span class="cm">// Notificar al productor: hay espacio</span>
+          <span class="kw">return</span> item; } <span class="kw">if</span> (producerDone.get() &amp;&amp; findFirst(type) &lt; 0)
+          <span class="kw">return null</span>;
+          <span class="cm">// Productor terminó, no hay más items</span> onBlocked.run();
+          <span class="cm">// Notificar UI: consumidor esperando</span>
+          changed.awaitNanos(200_000_000L); }
+          <span class="kw">return null</span>; } <span class="kw">finally</span> {
+          <span class="kw">lock</span>.unlock(); }
+        </div>
+
+        <div class="fig">
+          <img src="3.png" alt="Resultados Finales" data-height-listener-added="true">
+          <div class="fig-caption">
+            <span class="fig-num">Figura 3.</span> Resultado final de la Prueba personalizada (Asignada por el docente). Buffer vacío
+            (0/5), todos los consumidores en estado FINALIZADO. Las sumas acumuladas confirman que todos los datos del
+            productor fueron correctamente clasificados y procesados sin pérdidas ni duplicados.
+          </div>
+        </div>
+
+        <h3>Escenarios de Prueba Integrados</h3>
+        <table>
+          <thead>
+            <tr>
+              <th>Prueba</th>
+              <th>Archivo</th>
+              <th>Descripción</th>
+              <th>Comportamiento Esperado</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td><strong>Prueba 1: Mixta</strong></td>
+              <td>numeros.txt</td>
+              <td>Distribución equilibrada</td>
+              <td>Los tres consumidores muestran actividad constante.</td>
+            </tr>
+            <tr>
+              <td><strong>Prueba 2: Pares</strong></td>
+              <td>pares.txt</td>
+              <td>Mayoría de números pares</td>
+              <td>C1-PARES activo. C2 y C3 frecuentemente BLOQUEADOS POR TIPO.</td>
+            </tr>
+            <tr>
+              <td><strong>Prueba 3: Rápida</strong></td>
+              <td>doc.txt</td>
+              <td>Secuencia corta</td>
+              <td>Ejecución breve para validación rápida de sumas finales.</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </section>
+
+    <!-- 06. MÓDULO 2: FILÓSOFOS -->
+    <section id="filosofos">
+      <div class="content-wrapper">
+        <h2>06. Módulo 2: Filósofos Comensales</h2>
+
+        <h3>Descripción Formal del Problema</h3>
+        <p>
+          El problema de los Filósofos Comensales, formulado por Edsger W. Dijkstra en 1965, modela la competencia
+          simétrica por recursos compartidos. N filósofos se sientan alrededor de una mesa circular. Entre cada par de
+          filósofos adyacentes hay exactamente un tenedor. Para comer, un filósofo necesita adquirir ambos tenedores
+          (izquierda y derecha) de forma exclusiva. El reto es evitar el deadlock circular que ocurre si todos toman su
+          tenedor izquierdo simultáneamente.
+        </p>
+
+        <div class="grid-2">
+          <div>
+            <h4>Los Cinco Filósofos</h4>
+            <table>
+              <thead>
+                <tr>
+                  <th>ID</th>
+                  <th>Nombre</th>
+                  <th>Tenedores</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td>F0</td>
+                  <td><strong>Sócrates</strong></td>
+                  <td>T0, T4</td>
+                </tr>
+                <tr>
+                  <td>F1</td>
+                  <td><strong>Platón</strong></td>
+                  <td>T1, T0</td>
+                </tr>
+                <tr>
+                  <td>F2</td>
+                  <td><strong>Aristóteles</strong></td>
+                  <td>T2, T1</td>
+                </tr>
+                <tr>
+                  <td>F3</td>
+                  <td><strong>Descartes</strong></td>
+                  <td>T3, T2</td>
+                </tr>
+                <tr>
+                  <td>F4</td>
+                  <td><strong>Nietzsche</strong></td>
+                  <td>T4, T3</td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+          <div>
+            <h4>Leyenda de Estados</h4>
+            <div style="margin-top: 1.5rem">
+              <div style="display: flex; align-items: center; margin-bottom: 1rem">
+                <span class="state-dot state-thinking" style="width: 20px; height: 20px"></span>
+                <span style="margin-left: 10px; font-weight: bold">THINKING (Pensando)</span>
+              </div>
+              <p style="margin: 0 0 1rem 30px; font-size: 0.9rem">El filósofo no requiere recursos.</p>
+
+              <div style="display: flex; align-items: center; margin-bottom: 1rem">
+                <span class="state-dot state-waiting" style="width: 20px; height: 20px"></span>
+                <span style="margin-left: 10px; font-weight: bold">WAITING (Esperando)</span>
+              </div>
+              <p style="margin: 0 0 1rem 30px; font-size: 0.9rem">Ha solicitado comer, espera tenedores.</p>
+
+              <div style="display: flex; align-items: center; margin-bottom: 1rem">
+                <span class="state-dot state-eating" style="width: 20px; height: 20px"></span>
+                <span style="margin-left: 10px; font-weight: bold">EATING (Comiendo)</span>
+              </div>
+              <p style="margin: 0 0 1rem 30px; font-size: 0.9rem">Posee ambos tenedores. Sección Crítica.</p>
+            </div>
+          </div>
+        </div>
+
+        <div class="fig">
+          <img src="4.png" alt="Mesa de Filósofos" data-height-listener-added="true">
+          <div class="fig-caption">
+            <span class="fig-num">Figura 4.</span> Mesa circular de los Filósofos Comensales. En este instante, Platón y
+            Nietzsche están en estado EATING (verde) mientras Descartes espera (WAITING, amarillo). El panel "Resumen
+            rápido" muestra el contador de comidas por filósofo.
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- 07. MÓDULO 2: CÓDIGO -->
+    <section id="filosofos-code">
+      <div class="content-wrapper">
+        <h2>07. Módulo 2: Sección Crítica y Código</h2>
+
+        <div class="code-title">DiningTable.java — Adquisición Atómica (Anti-Deadlock)</div>
+        <div class="code-block">
+          <span class="kw">public void</span> <span class="fn">requestToEat</span>(<span class="tp">int</span>
+          <span class="nm">philosopherId</span>) { <span class="kw">lock</span>.lock(); <span class="kw">try</span> {
+          requestQueue.offer(philosopherId); <span class="cm">// Cola FIFO: orden de llegada</span>
+          <span class="kw">while</span> (running.get()) {
+          <span class="cm">// Condición doble: ser el primero en cola Y tener AMBOS tenedores libres</span>
+          <span class="kw">if</span> (requestQueue.peek() != <span class="kw">null</span> &amp;&amp; requestQueue.peek() ==
+          philosopherId &amp;&amp; forksAvailable(philosopherId)) { requestQueue.poll();
+          <span class="cm">// Salir de la cola</span> takeForks(philosopherId);
+          <span class="cm">// Asignación ATÓMICA de ambos tenedores</span> <span class="kw">return</span>; }
+          changed.await(); <span class="cm">// Espera eficiente</span> } } <span class="kw">catch</span> (<span class="tp">InterruptedException</span>
+          <span class="nm">e</span>) { <span class="tp">Thread</span>.currentThread().interrupt(); }
+          <span class="kw">finally</span> { <span class="kw">lock</span>.unlock(); } }
+        </div>
+
+        <div class="fig">
+          <img src="5.png" alt="Debug Panel" data-height-listener-added="true">
+          <div class="fig-caption">
+            <span class="fig-num">Figura 5.</span> Panel de depuración (Debug). La bitácora textual muestra la secuencia
+            exacta de eventos: filósofos iniciando, intentando adquirir tenedores, entrando a sección crítica y siendo
+            bloqueados.
+          </div>
+        </div>
+
+        <div class="box-evidence">
+          <p>
+            El panel de debug confirma: (1) solo un filósofo a la vez entra a "sección crítica (comiendo)" para el mismo
+            par de tenedores, demostrando exclusión mutua; (2) los mensajes "bloqueado: esperando tenedores" evidencian
+            el mecanismo de espera; (3) la ausencia de errores confirma la prevención de deadlock.
+          </p>
+        </div>
+      </div>
+    </section>
+
+    <!-- 08. SINCRONIZACIÓN -->
+    <section id="sync">
+      <div class="content-wrapper">
+        <h2>08. Sincronización: Primitivas y Control de Acceso</h2>
+
+        <p>
+          La robustez de SyncLab OS se basa en el uso explícito de primitivas de concurrencia modernas de Java (paquete
+          java.util.concurrent), evitando los bloques synchronized antiguos en favor de ReentrantLock para mayor control
+          y justicia.
+        </p>
+
+        <div class="box-concept">
+          <p>
+            <strong>ReentrantLock(true) - Fairness:</strong> El constructor con el parámetro <code>true</code> activa la
+            política de equidad basada en orden de llegada (FIFO). Esto significa que el hilo que lleva más tiempo
+            esperando adquirir el lock tiene prioridad sobre los recién llegados, eliminando la inanición teórica.
+          </p>
+        </div>
+
+        <h3>Tabla Maestra de Sincronización</h3>
+        <table>
+          <thead>
+            <tr>
+              <th>Módulo</th>
+              <th>Recurso Compartido</th>
+              <th>Clase Protectora</th>
+              <th>Primitiva</th>
+              <th>Sección Crítica</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td>Prod-Cons</td>
+              <td>LinkedList queue</td>
+              <td>SharedBuffer</td>
+              <td>ReentrantLock(true)</td>
+              <td>put(), takeOfType()</td>
+            </tr>
+            <tr>
+              <td>Filósofos</td>
+              <td>int[] forkOwner</td>
+              <td>DiningTable</td>
+              <td>ReentrantLock(true)</td>
+              <td>requestToEat(), releaseForks()</td>
+            </tr>
+          </tbody>
+        </table>
+
+        <div class="grid-2">
+          <div class="box-decision">
+            <p>
+              <strong>Decisión Prod-Cons:</strong> La invariante es 0 ≤ queue.size() ≤ capacity. El lock garantiza que
+              nunca se viola. La Condition signalAll() actúa como señal bidireccional entre productor y consumidores.
+            </p>
+          </div>
+          <div class="box-decision">
+            <p>
+              <strong>Decisión Filósofos:</strong> La invariante es que cada tenedor tiene máximo un dueño. La
+              adquisición atómica de ambos tenedores elimina la condición de "retención y espera" necesaria para el
+              deadlock.
+            </p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- 09. RIESGOS -->
+    <section id="riesgos">
+      <div class="content-wrapper">
+        <h2>09. Análisis de Riesgos: Race Conditions y Deadlock</h2>
+
+        <h3>Condiciones de Carrera (Race Conditions)</h3>
+        <p>
+          Sin sincronización, dos consumidores podrían ejecutar findFirst() simultáneamente, obtener el mismo índice, y
+          ambos intentar queue.remove(idx). <strong>Mitigación:</strong> Todo acceso a la queue ocurre dentro de un
+          bloque lock.lock(). Además, para la UI, se generan copias (snapshots) de los datos antes de enviarlos al hilo
+          de renderizado.
+        </p>
+
+        <h3>Interbloqueo (Deadlock)</h3>
+        <div class="box-risk">
+          <p>
+            <strong>Riesgo Crítico:</strong> En Filósofos, si todos toman el tenedor izquierdo simultáneamente, se
+            produce un deadlock circular.
+          </p>
+          <p>
+            <strong>Mitigación Implementada:</strong> Asignación Atómica. DiningTable.requestToEat() garantiza que un
+            filósofo solo "toma" tenedores cuando AMBOS están disponibles. Si uno no está libre, espera sin retener
+            ningún recurso.
+          </p>
+        </div>
+
+        <h3>Tabla Comparativa de Riesgos</h3>
+        <table>
+          <thead>
+            <tr>
+              <th>Riesgo</th>
+              <th>Módulo</th>
+              <th>Escenario Sin Protección</th>
+              <th>Mecanismo de Mitigación</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td>Race Condition</td>
+              <td>Prod-Cons</td>
+              <td>Dos consumidores extraen el mismo item</td>
+              <td>lock.lock() en put/take</td>
+            </tr>
+            <tr>
+              <td>Race Condition UI</td>
+              <td>Ambos</td>
+              <td>ConcurrentModificationException en UI</td>
+              <td>Snapshots inmutables</td>
+            </tr>
+            <tr>
+              <td>Deadlock</td>
+              <td>Filósofos</td>
+              <td>Espera circular de recursos</td>
+              <td>Adquisición atómica dual</td>
+            </tr>
+            <tr>
+              <td>Starvation</td>
+              <td>Ambos</td>
+              <td>Un hilo monopoliza el lock</td>
+              <td>ReentrantLock(true) Fairness</td>
+            </tr>
+            <tr>
+              <td>Buffer Overflow</td>
+              <td>Prod-Cons</td>
+              <td>Productor inserta sobre capacidad</td>
+              <td>Condition.await()</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </section>
+
+    <!-- 10. ANIMACIÓN -->
+    <section id="animacion">
+      <div class="content-wrapper">
+        <h2>10. Animación e Interfaz Gráfica</h2>
+        <p>
+          La visualización no es un adorno, sino una herramienta de depuración visual diseñada para ser autoexplicativa.
+          Permite correlacionar el código con el comportamiento observable.
+        </p>
+
+        <h3>Elementos Visuales: Filósofos</h3>
+        <table>
+          <thead>
+            <tr>
+              <th>Estado</th>
+              <th>Color</th>
+              <th>Significado Técnico</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td><strong>THINKING</strong></td>
+              <td>Azul (#4A90E2)</td>
+              <td>El hilo ejecuta Thread.sleep(). No posee ni solicita recursos.</td>
+            </tr>
+            <tr>
+              <td><strong>WAITING</strong></td>
+              <td>Amarillo (#F7D460)</td>
+              <td>Bloqueado en Condition.await(). Ha solicitado recursos pero están ocupados.</td>
+            </tr>
+            <tr>
+              <td><strong>EATING</strong></td>
+              <td>Verde (#92D89A)</td>
+              <td>En Sección Crítica. Posee los tenedores izquierdo y derecho.</td>
+            </tr>
+          </tbody>
+        </table>
+
+        <div class="box-note">
+          <p>
+            <strong>Arquitectura de Actualización:</strong> Para cruzar la barrera entre hilos de simulación y el hilo
+            UI (EDT) de forma segura, se utilizan dos mecanismos: (1) SwingUtilities.invokeLater() para eventos
+            puntuales, y (2) javax.swing.Timer para el refresco periódico de snapshots (90ms).
+          </p>
+        </div>
+      </div>
+    </section>
+
+    <!-- 11. PRUEBAS -->
+    <section id="pruebas">
+      <div class="content-wrapper">
+        <h2>11. Pruebas y Validación</h2>
+
+        <h3>Escenarios Integrados</h3>
+        <table>
+          <thead>
+            <tr>
+              <th>Escenario</th>
+              <th>Descripción</th>
+              <th>Comportamiento Observable</th>
+              <th>Indicador de Éxito</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td><strong>Prueba 1: Mixta</strong></td>
+              <td>Combinación equilibrada</td>
+              <td>Los tres consumidores alternan actividad.</td>
+              <td>Buffer vacío al final.</td>
+            </tr>
+            <tr>
+              <td><strong>Prueba 2: Pares</strong></td>
+              <td>Predominancia pares</td>
+              <td>C1-PARES activo. C2/C3 bloqueados.</td>
+              <td>Suma pares &gt;&gt; suma otros.</td>
+            </tr>
+            <tr>
+              <td><strong>Prueba 3: Rápida</strong></td>
+              <td>Secuencia corta</td>
+              <td>Ejecución breve.</td>
+              <td>Sumas coinciden con cálculo manual.</td>
+            </tr>
+          </tbody>
+        </table>
+
+        <h3>Criterios de Validación (Checklist)</h3>
+        <div class="box-evidence">
+          <p>
+            ✅ <strong>Exclusión Mutua:</strong> Nunca hay dos filósofos adyacentes en estado EATING simultáneamente.
+          </p>
+          <p>
+            ✅ <strong>Progreso:</strong> El contador de comidas crece para todos los filósofos (no hay starvation).
+          </p>
+          <p>
+            ✅ <strong>Integridad:</strong> La suma total de los consumidores iguala exactamente a la suma de números
+            producidos.
+          </p>
+          <p>
+            ✅ <strong>Robustez:</strong> Al pausar y reiniciar, el sistema vuelve a un estado consistente sin
+            excepciones.
+          </p>
+        </div>
+      </div>
+    </section>
+
+    <!-- 12. MANUAL DE USUARIO -->
+    <section id="manual">
+      <div class="content-wrapper">
+        <h2>12. Manual de Usuario</h2>
+
+        <h3>Requisitos del Sistema</h3>
+        <table>
+          <thead><tr><th>Componente</th><th>Versión Mínima</th><th>Notas</th></tr></thead>
+          <tbody>
+            <tr><td>Java Development Kit (JDK)</td><td>21</td><td>OpenJDK 21 o superior. No compatible con JDK &lt; 21.</td></tr>
+            <tr><td>Apache Maven</td><td>3.9+</td><td>Para compilación y ejecución por línea de comandos.</td></tr>
+            <tr><td>Sistema Operativo</td><td>Windows 10 / macOS 12 / Ubuntu 20.04</td><td>Cualquier SO con soporte oficial para Java 21.</td></tr>
+            <tr><td>Resolución de pantalla</td><td>1024×768 mínimo</td><td>La mesa circular de filósofos requiere espacio suficiente.</td></tr>
+          </tbody>
+        </table>
+
+        <h3>Instalación y Compilación</h3>
+        <div class="code-block"><span class="cm"># Paso 1: Verificar instalación de Java</span>
+java -version
+<span class="cm"># Resultado esperado: openjdk version "21.x.x" ...</span>
+
+<span class="cm"># Paso 2: Verificar Maven</span>
+mvn -version
+<span class="cm"># Resultado esperado: Apache Maven 3.9.x ...</span>
+
+<span class="cm"># Paso 3: Compilar el proyecto (desde la raíz del proyecto)</span>
+mvn clean compile
+
+<span class="cm"># Paso 4: Ejecutar la aplicación</span>
+mvn exec:java</div>
+
+        <h3>Guía de Uso Rápida</h3>
+        <ol>
+          <li>Al iniciar, seleccione el módulo deseado en el Menú Principal.</li>
+          <li>
+            <strong>En Productor-Consumidor:</strong> Seleccione una Prueba del panel izquierdo y haga clic en "Ejecutar
+            prueba". Use los botones de Pausa/Reanudar para analizar el flujo.
+          </li>
+          <li>
+            <strong>En Filósofos:</strong> Haga clic en "Iniciar". Observe los cambios de color en la mesa. Use "Ver
+            debug" para ver la bitácora textual.
+          </li>
+          <li>Para salir, use el botón "Volver al menú" en la esquina superior derecha.</li>
+        </ol>
+
+        <h3>Solución de Problemas</h3>
+        <table>
+          <thead>
+            <tr>
+              <th>Error</th>
+              <th>Causa Probable</th>
+              <th>Solución</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td>mvn: command not found</td>
+              <td>Maven no instalado</td>
+              <td>Instalar Apache Maven y agregar al PATH.</td>
+            </tr>
+            <tr>
+              <td>release version 21 not supported</td>
+              <td>JDK antiguo</td>
+              <td>Actualizar a OpenJDK 21.</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </section>
+
+    <!-- 13. LIMITACIONES Y MEJORAS FUTURAS -->
+    <section id="mejoras" style="background: var(--bg-section);">
+      <div class="content-wrapper">
+        <h2>13. Limitaciones y Mejoras Futuras</h2>
+        <p>Aunque SyncLab OS es funcional y robusto para fines académicos, el equipo identifica las siguientes áreas de mejora para una versión 2.0:</p>
+
+        <h3>Limitaciones Actuales</h3>
+        <table>
+          <thead><tr><th>#</th><th>Limitación</th><th>Descripción</th><th>Impacto</th></tr></thead>
+          <tbody>
+            <tr>
+              <td>L1</td>
+              <td>Número fijo de actores</td>
+              <td>La mesa de filósofos está fijada a N=5. El módulo Prod-Cons tiene 1 grupo de 3 consumidores. Cambiar estos valores requiere modificar el código fuente.</td>
+              <td>Medio — Limita los escenarios de prueba</td>
+            </tr>
+            <tr>
+              <td>L2</td>
+              <td>Sin pruebas automatizadas</td>
+              <td>No existe una suite JUnit que valide la lógica de sincronización sin la GUI. Las pruebas son actualmente manuales y visuales.</td>
+              <td>Alto — Sin garantía formal de correctitud</td>
+            </tr>
+            <tr>
+              <td>L3</td>
+              <td>Sin exportación de métricas</td>
+              <td>No hay manera de guardar las sumas, tiempos de espera ni el número de comidas en un archivo externo para análisis posterior.</td>
+              <td>Bajo — Solo afecta análisis post-ejecución</td>
+            </tr>
+            <tr>
+              <td>L4</td>
+              <td>Sin modo headless</td>
+              <td>La aplicación no tiene modo de línea de comandos. Requiere entorno gráfico (no funciona en servidores sin display).</td>
+              <td>Bajo — Uso académico con pantalla</td>
+            </tr>
+            <tr>
+              <td>L5</td>
+              <td>Sin métricas de rendimiento</td>
+              <td>No se mide ni muestra el tiempo promedio de espera por hilo, el throughput del buffer ni la frecuencia de bloqueos por unidad de tiempo.</td>
+              <td>Medio — Limita el análisis cuantitativo</td>
+            </tr>
+          </tbody>
+        </table>
+
+        <h3>Mejoras Propuestas para Versión 2.0</h3>
+        <table>
+          <thead><tr><th>Mejora</th><th>Descripción</th><th>Beneficio</th><th>Prioridad</th></tr></thead>
+          <tbody>
+            <tr><td><strong>N dinámico en filósofos</strong></td><td>Permitir configurar 3–10 filósofos desde la UI</td><td>Estudio de escalabilidad del problema</td><td>🔴 Alta</td></tr>
+            <tr><td><strong>Velocidad configurable</strong></td><td>Control deslizante para la velocidad de simulación</td><td>Análisis a cámara lenta para defensa</td><td>🔴 Alta</td></tr>
+            <tr><td><strong>Suite JUnit con Awaitility</strong></td><td>Tests automatizados de estados eventuales de hilos</td><td>Garantía formal de correctitud</td><td>🔴 Alta</td></tr>
+            <tr><td><strong>Gráficas en tiempo real</strong></td><td>Gráfica de ocupación del buffer vs. tiempo</td><td>Comprensión visual del throughput</td><td>🟡 Media</td></tr>
+            <tr><td><strong>Exportación CSV/JSON</strong></td><td>Guardar resultados de ejecución en archivo</td><td>Análisis post-ejecución en laboratorio</td><td>🟡 Media</td></tr>
+            <tr><td><strong>Grupos de consumidores configurables</strong></td><td>Cambiar número de grupos desde la UI</td><td>Mayor flexibilidad de pruebas</td><td>🟡 Media</td></tr>
+            <tr><td><strong>Modo comparativo</strong></td><td>Mostrar ambas simulaciones simultáneamente</td><td>Comparación visual directa</td><td>🟢 Baja</td></tr>
+          </tbody>
+        </table>
+      </div>
+    </section>
+
+    <!-- 14. CONCLUSIONES -->
+    <section id="conclusiones">
+      <div class="content-wrapper">
+        <h2>14. Conclusiones</h2>
+
+        <p>El proyecto <strong>SyncLab OS</strong> ha logrado con éxito su objetivo principal: implementar, demostrar y visualizar la correcta sincronización de hilos en dos de los problemas más representativos de la teoría de sistemas operativos. El uso de <code>ReentrantLock(true)</code> y <code>Condition</code> variables permite un control explícito y justo de la sección crítica en ambos módulos, con garantías formales de exclusión mutua y progreso.</p>
+
+        <p>La estrategia de asignación atómica de tenedores en el módulo de Filósofos Comensales demuestra una solución robusta al problema del deadlock circular, rompiendo específicamente la condición de "retención y espera" de Coffman. El buffer acotado con <code>Conditions</code> bidireccionales en el módulo Productor-Consumidor ilustra el patrón clásico del Monitor en un entorno Java 21 moderno, sin necesidad de frameworks externos.</p>
+
+        <p>Desde la perspectiva educativa, el mayor aporte de SyncLab OS es transformar conceptos abstractos en comportamientos observables. Un estudiante que ve cómo un consumidor cambia su estado a <em>"BLOQUEADO_POR_TIPO"</em> mientras otro extrae datos comprende intuitivamente qué significa "espera condicionada". Observar que dos filósofos nunca comen simultáneamente siendo adyacentes es una validación visual de la exclusión mutua más convincente que cualquier demostración matemática formal en una pizarra.</p>
+
+        <div class="box-concept">
+          <p><strong>Reflexión Final:</strong> El diseño de SyncLab OS refleja un principio fundamental en la ingeniería de software: la separación de responsabilidades no solo mejora el mantenimiento, sino que también reduce la superficie de error. Al encapsular toda la lógica concurrente en clases dedicadas (<code>SharedBuffer</code>, <code>DiningTable</code>) y desacoplarla de la UI mediante snapshots inmutables, se garantiza que los bugs de concurrencia y los bugs de presentación no se confunden entre sí, facilitando tanto el diagnóstico como la extensión futura del sistema.</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- 15. GLOSARIO TÉCNICO -->
+    <section id="glosario" style="background: var(--bg-section);">
+      <div class="content-wrapper">
+        <h2>15. Glosario Técnico</h2>
+        <p>Definiciones de los términos fundamentales de concurrencia utilizados a lo largo de esta documentación.</p>
+
+        <div class="glossary-grid">
+          <div class="glossary-item">
+            <span class="gloss-term">Sección Crítica</span>
+            <p class="gloss-def">Región del código que accede a un recurso compartido y debe ejecutarse de forma mutuamente excluyente. Solo un hilo puede estar dentro de la sección crítica de un recurso específico a la vez. En SyncLab OS: los métodos <code>put()</code> y <code>takeOfType()</code> en SharedBuffer; y <code>requestToEat()</code> en DiningTable.</p>
+          </div>
+          <div class="glossary-item">
+            <span class="gloss-term">Exclusión Mutua (Mutex)</span>
+            <p class="gloss-def">Propiedad que garantiza que solo un proceso o hilo ejecuta la sección crítica en cualquier instante dado. Es la propiedad de seguridad fundamental en programación concurrente. Implementada en SyncLab OS mediante <code>ReentrantLock</code>.</p>
+          </div>
+          <div class="glossary-item">
+            <span class="gloss-term">Deadlock (Interbloqueo)</span>
+            <p class="gloss-def">Situación en la que dos o más hilos quedan bloqueados permanentemente, cada uno esperando un recurso que posee otro hilo del mismo grupo. Requiere las cuatro condiciones de Coffman simultáneas: exclusión mutua, retención y espera, sin desalojo, y espera circular.</p>
+          </div>
+          <div class="glossary-item">
+            <span class="gloss-term">Starvation (Inanición)</span>
+            <p class="gloss-def">Condición en la que un hilo nunca recibe acceso al recurso que solicita, a pesar de que el recurso se libera periódicamente, debido a políticas de planificación injustas o sesgadas. Mitigado en SyncLab OS mediante locks con fairness y colas FIFO explícitas.</p>
+          </div>
+          <div class="glossary-item">
+            <span class="gloss-term">Race Condition</span>
+            <p class="gloss-def">Situación en la que el resultado de un cómputo depende del orden relativo no determinista en que los hilos acceden a datos compartidos. Puede producir resultados incorrectos, excepciones o comportamientos no reproducibles. Corregida mediante acceso exclusivo bajo lock.</p>
+          </div>
+          <div class="glossary-item">
+            <span class="gloss-term">Progreso</span>
+            <p class="gloss-def">Propiedad que garantiza que si ningún hilo está en la sección crítica y existen hilos que desean entrar, alguno de ellos eventualmente lo logrará. Asegura que el sistema no quede "atascado" sin producir trabajo útil.</p>
+          </div>
+          <div class="glossary-item">
+            <span class="gloss-term">Buffer Finito (Bounded Buffer)</span>
+            <p class="gloss-def">Estructura de datos de capacidad limitada usada como canal de comunicación entre productores y consumidores. La restricción de capacidad introduce la necesidad de sincronización explícita: el productor espera cuando está lleno y el consumidor espera cuando está vacío.</p>
+          </div>
+          <div class="glossary-item">
+            <span class="gloss-term">Recurso Compartido</span>
+            <p class="gloss-def">Cualquier dato o componente del sistema al que pueden acceder múltiples hilos o procesos concurrentemente. En SyncLab OS: la cola <code>LinkedList&lt;NumberItem&gt;</code> del buffer y el array <code>int[] forkOwner</code> de la mesa de filósofos.</p>
+          </div>
+          <div class="glossary-item">
+            <span class="gloss-term">Lock (Cerrojo)</span>
+            <p class="gloss-def">Primitiva de sincronización que permite a un hilo adquirir control exclusivo sobre un recurso. En Java, <code>ReentrantLock</code> implementa un lock reentrante (el mismo hilo puede adquirirlo múltiples veces) con soporte opcional para fairness (<code>true</code>).</p>
+          </div>
+          <div class="glossary-item">
+            <span class="gloss-term">Condition Variable</span>
+            <p class="gloss-def">Mecanismo que permite a un hilo esperar (<code>await()</code>) hasta que una condición lógica se cumpla, sin consumir CPU activamente. Se usa en pareja con un lock. El método <code>signalAll()</code> despierta a todos los hilos en espera para reevaluar la condición.</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- 16. RECOMENDACIONES DE MANTENIMIENTO -->
+    <section id="mantenimiento">
+      <div class="content-wrapper">
+        <h2>16. Recomendaciones de Mantenimiento</h2>
+        <p>Para garantizar la robustez y extensibilidad futura de SyncLab OS, cualquier desarrollador que retome el proyecto debe seguir estas directrices basadas en las decisiones de diseño actuales:</p>
+
+        <div class="maintenance-item">
+          <div class="maint-icon">🔒</div>
+          <div class="maint-text">
+            <span class="maint-title">Nunca acceder a recursos compartidos fuera del lock</span>
+            <p class="maint-desc">La <code>LinkedList queue</code> en <code>SharedBuffer</code> y el array <code>forkOwner</code> en <code>DiningTable</code> solo deben ser leídos o modificados dentro de un bloque <code>lock.lock()/lock.unlock()</code>. Cualquier acceso fuera de este bloque puede introducir condiciones de carrera silenciosas que son extremadamente difíciles de diagnosticar.</p>
+          </div>
+        </div>
+
+        <div class="maintenance-item">
+          <div class="maint-icon">📦</div>
+          <div class="maint-text">
+            <span class="maint-title">Mantener los snapshots como objetos inmutables</span>
+            <p class="maint-desc">Los objetos <code>ProducerConsumerState</code> y <code>DiningState</code> se pasan al hilo EDT para renderizado. Cualquier campo de estos objetos debe ser primitivo o una copia profunda (deep copy) de la colección original. Nunca pasar referencias directas a las estructuras de datos concurrentes.</p>
+          </div>
+        </div>
+
+        <div class="maintenance-item">
+          <div class="maint-icon">🔡</div>
+          <div class="maint-text">
+            <span class="maint-title">Centralizar los textos de la UI en una clase de constantes</span>
+            <p class="maint-desc">Los mensajes de estado ("EXTRAYENDO", "BLOQUEADO_POR_TIPO", etc.) están distribuidos en varias clases. Para una v2.0, se recomienda centralizar estas cadenas en una clase <code>UIConstants.java</code> para facilitar la internacionalización y el mantenimiento.</p>
+          </div>
+        </div>
+
+        <div class="maintenance-item">
+          <div class="maint-icon">⚡</div>
+          <div class="maint-text">
+            <span class="maint-title">No modificar el Look &amp; Feel en hilos no-EDT</span>
+            <p class="maint-desc">La configuración del Look &amp; Feel (<code>UIManager.setLookAndFeel()</code>) debe realizarse exclusivamente en el hilo EDT antes de crear cualquier componente Swing. Hacerlo en otros hilos puede causar condiciones de carrera en la inicialización de Swing que se manifiestan como errores intermitentes difíciles de reproducir.</p>
+          </div>
+        </div>
+
+        <div class="maintenance-item">
+          <div class="maint-icon">🧪</div>
+          <div class="maint-text">
+            <span class="maint-title">Añadir pruebas de concurrencia con Awaitility</span>
+            <p class="maint-desc">Para validar la lógica de sincronización sin GUI, se recomienda usar la biblioteca Awaitility (compatible con JUnit 5), que permite escribir aserciones sobre estados eventuales de hilos de forma legible: <code>await().atMost(5, SECONDS).until(() -&gt; simulation.isFinished())</code>.</p>
+          </div>
+        </div>
+
+        <div class="maintenance-item">
+          <div class="maint-icon">📊</div>
+          <div class="maint-text">
+            <span class="maint-title">Documentar los parámetros de tiempo de simulación</span>
+            <p class="maint-desc">Las constantes <code>THINK_MIN_MS</code>, <code>EAT_MIN_MS</code> y sus rangos determinan la velocidad visual de la simulación. Cambiarlos sin comprender su impacto puede hacer la demo demasiado rápida (difícil de observar) o demasiado lenta. Se recomienda documentar los valores óptimos para presentación académica en comentarios en el código.</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- 17. ENTREGABLES Y REPOSITORIOS -->
+<section id="entregables" style="background: var(--blue-deep); color: white; padding: 4rem 0;">
+  <div class="content-wrapper">
+    <h2 style="color: white; border-color: var(--gold-accent);">17. Entregables y repositorios</h2>
+    <p style="color: rgba(255,255,255,0.82); max-width: 900px;">
+      Esta sección resume los materiales finales de entrega del proyecto <strong>SyncLab OS</strong>,
+      incluyendo la documentación técnica y los repositorios asociados al desarrollo.
+      Su propósito es centralizar el acceso a los recursos que respaldan la implementación,
+      la validación y la presentación académica del sistema.
+    </p>
+
+    <div class="box-decision" style="background: rgba(255,255,255,0.05); border-color: var(--gold-accent);">
+      <p style="color: rgba(255,255,255,0.92);">
+        <strong style="color: var(--gold-accent);">Entrega principal:</strong>
+        el repositorio final del proyecto es <strong>SyncLab OS</strong>, ya que concentra la solución unificada,
+        la interfaz gráfica, la animación y la documentación técnica del sistema.
+      </p>
+    </div>
+
+    <h3 style="color: var(--green-tech); margin-top: 2rem;">17.1 Materiales entregables</h3>
+    <div class="grid-two" style="display: grid; grid-template-columns: 1fr 1fr; gap: 1.5rem; margin-top: 1rem;">
+      <div class="box-decision" style="background: rgba(255,255,255,0.04); border-color: rgba(255,255,255,0.15);">
+        <h4 style="color: var(--gold-accent); margin-bottom: 0.8rem;">Documento técnico</h4>
+        <p style="color: rgba(255,255,255,0.8);">
+          Documentación técnica del proyecto con explicación del funcionamiento del programa,
+          modelado formal, diagramas, sincronización, sección crítica, análisis de race conditions,
+          prevención de deadlock y manual de usuario.
+        </p>
+      </div>
+
+      <div class="box-decision" style="background: rgba(255,255,255,0.04); border-color: rgba(255,255,255,0.15);">
+        <h4 style="color: var(--gold-accent); margin-bottom: 0.8rem;">Código fuente</h4>
+        <p style="color: rgba(255,255,255,0.8);">
+          Código fuente ordenado, modular y comentado, disponible mediante enlaces Git.
+          El repositorio principal contiene la versión final integrada del sistema.
+        </p>
+      </div>
+    </div>
+
+    <h3 style="color: var(--green-tech); margin-top: 2.5rem;">17.2 Repositorios relacionados</h3>
+
+    <div class="box-decision" style="background: rgba(255,255,255,0.04); border-color: rgba(255,255,255,0.12); margin-top: 1rem;">
+      <h4 style="color: var(--gold-accent); margin-bottom: 0.5rem;">Repositorio principal del proyecto</h4>
+      <p style="color: rgba(255,255,255,0.86); margin-bottom: 0.8rem;">
+        <strong>SyncLab OS</strong> corresponde a la versión final integrada del proyecto.
+        Este repositorio contiene la aplicación unificada en Java 21, el menú principal,
+        el módulo de Productor-Consumidor, el módulo de Filósofos Comensales,
+        las pruebas integradas y la documentación del sistema.
+      </p>
+      <p style="margin: 0;">
+        <a href="https://github.com/paolomarroq/synclab-os"
+           target="_blank"
+           style="color: var(--green-tech); font-weight: 700; text-decoration: none;">
+          https://github.com/paolomarroq/synclab-os
+        </a>
+      </p>
+    </div>
+
+    <div class="box-decision" style="background: rgba(255,255,255,0.04); border-color: rgba(255,255,255,0.12); margin-top: 1rem;">
+      <h4 style="color: var(--gold-accent); margin-bottom: 0.5rem;">Repositorio de referencia utilizado</h4>
+      <p style="color: rgba(255,255,255,0.86); margin-bottom: 0.8rem;">
+        Este repositorio fue tomado como referencia para recuperar e integrar el componente
+        original de Productor-Consumidor, especialmente su estructura base y escenarios de prueba,
+        los cuales posteriormente fueron migrados y adaptados al proyecto final unificado.
+      </p>
+      <p style="margin: 0;">
+        <a href="https://github.com/waltermelendez/Prodcuto-Consumidor/tree/main/src/main/java"
+           target="_blank"
+           style="color: var(--green-tech); font-weight: 700; text-decoration: none;">
+          https://github.com/waltermelendez/Prodcuto-Consumidor/tree/main/src/main/java
+        </a>
+      </p>
+    </div>
+
+  </div>
+</section>
+
+    <!-- FOOTER -->
+    <footer>
+      <p><strong style="color: rgba(255,255,255,0.8);">SyncLab OS</strong> — Documentación Técnica de Proyecto &nbsp;|&nbsp; Sistemas Operativos &nbsp;|&nbsp; Facultad de Ingeniería de Sistemas</p>
+      <p style="margin-top: 0.5rem;">Generado para defensa académica &nbsp;·&nbsp; Java 21 &nbsp;·&nbsp; Swing &nbsp;·&nbsp; Maven &nbsp;·&nbsp; 2025</p>
+    </footer>
+
+  
+
+</body></html>
